@@ -3,8 +3,10 @@ package com.dmj.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dmj.annotation.AutoFill;
 import com.dmj.dto.EmployeePageQueryDTO;
 import com.dmj.entity.Employee;
+import com.dmj.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -21,4 +23,8 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
 
     Page<Employee> pageQuery(IPage page, EmployeePageQueryDTO pageQueryDTO);
 
+    @AutoFill(OperationType.INSERT)
+    default void add(Employee employee){
+        this.insert(employee);
+    };
 }

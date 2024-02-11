@@ -21,4 +21,15 @@
         sort,status,create_time,
         update_time,create_user,update_user
     </sql>
+    <select id="pageQuery" resultType="com.dmj.entity.Category">
+        select <include refid="Base_Column_List"/> from category
+        <where>
+           <if test="categoryPageQueryDTO.name != null and categoryPageQueryDTO.name != ''">
+               and `name` like concat('%',#{categoryPageQueryDTO.name},'%')
+           </if>
+            <if test="categoryPageQueryDTO.type != null and categoryPageQueryDTO.type != ''">
+                and `type` = categoryPageQueryDTO.type
+            </if>
+        </where>
+    </select>
 </mapper>

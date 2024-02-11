@@ -2,6 +2,9 @@ package com.dmj.mapper;
 
 import com.dmj.entity.Dish;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author dmj
@@ -9,7 +12,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2024-02-09 16:06:39
 * @Entity generator.domain.Dish
 */
+@Mapper
 public interface DishMapper extends BaseMapper<Dish> {
+
+    int contByCategoryId(Long categoryId);
 
 }
 

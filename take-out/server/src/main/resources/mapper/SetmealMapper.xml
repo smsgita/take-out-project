@@ -24,4 +24,8 @@
         image,create_time,update_time,
         create_user,update_user
     </sql>
+    <select id="contByCategoryId" resultType="java.lang.Integer">
+        select count(id) from setmeal
+        where category_id = #{categoryId}
+    </select>
 </mapper>

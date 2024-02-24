@@ -1,4 +1,4 @@
-sky:
+dmj:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     host: localhost
@@ -6,3 +6,15 @@ sky:
     database: dmj_take_out
     username: root
     password: dmj123456
+
+  cos:
+    client:
+      accessKey: AKIDOflfMrAHBzhDVoAWza5QYS9lBMJ1Ysz6
+      secretKey: EKIAwa8cstlWHoCSVJsFOKqPo7GNF0d7
+      region: ap-guangzhou
+      bucket: dmj-1302378345
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+    database: 10

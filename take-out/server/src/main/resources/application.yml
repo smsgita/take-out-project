@@ -8,28 +8,40 @@ spring:
     allow-circular-references: true
   datasource:
     druid:
-      driver-class-name: ${sky.datasource.driver-class-name}
-      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-      username: ${sky.datasource.username}
-      password: ${sky.datasource.password}
-
+      driver-class-name: ${dmj.datasource.driver-class-name}
+      url: jdbc:mysql://${dmj.datasource.host}:${dmj.datasource.port}/${dmj.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${dmj.datasource.username}
+      password: ${dmj.datasource.password}
+  redis:
+    host: ${dmj.redis.host}
+    port: ${dmj.redis.port}
+    password: ${dmj.redis.password}
+    database: ${dmj.redis.database}
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.sky.entity
+  type-aliases-package: com.dmj.entity
   configuration:
     #开启驼峰命名
     map-underscore-to-camel-case: true
-
+#mybatis-plus:
+#  configuration:
+#    map-underscore-to-camel-case: false
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  global-config:
+#    db-config:
+#      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+#      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+#      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
 logging:
   level:
     com:
-      sky:
+      dmj:
         mapper: debug
         service: info
         controller: info
 
-sky:
+dmj:
   jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: itcast
@@ -37,3 +49,10 @@ sky:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+
+cos:
+  client:
+    accessKey: ${dmj.cos.client.accessKey}
+    secretKey: ${dmj.cos.client.secretKey}
+    region: ${dmj.cos.client.region}
+    bucket: ${dmj.cos.client.bucket}

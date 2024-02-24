@@ -12,9 +12,11 @@ import com.dmj.result.Result;
 import com.dmj.service.EmployeeService;
 import com.dmj.utils.JwtUtil;
 import com.dmj.vo.EmployeeLoginVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -26,6 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j
+@Api(tags = "员工相关接口")
 public class EmployeeController {
 
     @Autowired
@@ -92,7 +95,7 @@ public class EmployeeController {
      * @param pageQueryDTO
      * @return
      */
-    @PostMapping("/page")
+    @GetMapping("/page")
     @ApiOperation("新增员工")
     public Result page(EmployeePageQueryDTO pageQueryDTO){
         PageResult pageResult = employeeService.pageQuery(pageQueryDTO);

@@ -2,6 +2,7 @@ package com.dmj.controller.admin;
 
 import com.dmj.dto.DishDTO;
 import com.dmj.dto.DishPageQueryDTO;
+import com.dmj.entity.Dish;
 import com.dmj.result.PageResult;
 import com.dmj.result.Result;
 import com.dmj.service.DishService;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/dish")
@@ -70,4 +72,18 @@ public class DishController {
         dishService.updateWithFlavor(dishDTO);
         return Result.success();
     }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation("根据分类id查询菜品")
+    public Result<List<Dish>> list(Long categoryId){
+        List<Dish> list = dishService.list(categoryId);
+        return Result.success(list);
+    }
+
+
 }

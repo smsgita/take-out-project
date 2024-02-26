@@ -1,5 +1,6 @@
 package com.dmj.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.dmj.annotation.AutoFill;
 import com.dmj.dto.DishPageQueryDTO;
 import com.dmj.entity.Dish;
@@ -8,6 +9,7 @@ import com.dmj.enumeration.OperationType;
 import com.dmj.vo.DishVO;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -38,6 +40,16 @@ public interface DishMapper extends BaseMapper<Dish> {
    default int IUpdateById(Dish dish){
         return this.updateById(dish);
     };
+
+    List<Dish> list(Dish dish);
+
+    /**
+     * 根据套餐id查询菜品
+     * @param setmealId
+     * @return
+     */
+    @Select("select a.* from dish a left join setmeal_dish b on a.id = b.dish_id where b.setmeal_id = #{setmealId}")
+    List<Dish> getBySetmealId(Long setmealId);
 }
 
 

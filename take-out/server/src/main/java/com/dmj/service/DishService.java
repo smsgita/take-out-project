@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dmj.result.PageResult;
 import com.dmj.vo.DishVO;
 
+import java.util.List;
+
 /**
 * @author dmj
 * @description 针对表【dish(菜品)】的数据库操作Service
@@ -39,4 +41,18 @@ public interface DishService{
     DishVO getByIdWithFlavor(Long id);
 
     void updateWithFlavor(DishDTO dishDTO);
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    List<Dish> list(Long categoryId);
 }

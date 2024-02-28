@@ -65,6 +65,10 @@ dmj:
     weChatPayCertFilePath: ${dmj.wechat.weChatPayCertFilePath}
     notifyUrl: ${dmj.wechat.notifyUrl}
     refundNotifyUrl: ${dmj.wechat.refundNotifyUrl}
+  shop:
+    address: 广东省广东市白云区棠下东二街4号
+  baidu:
+    ak: ${dmj.baidu.ak}
 cos:
   client:
     accessKey: ${dmj.cos.client.accessKey}

@@ -58,6 +58,13 @@ dmj:
   wechat:
     appid: ${dmj.wechat.appid}
     secret: ${dmj.wechat.secret}
+    mchid: ${dmj.wechat.mchid}
+    mchSerialNo: ${dmj.wechat.mchSerialNo}
+    privateKeyFilePath: ${dmj.wechat.privateKeyFilePath}
+    apiV3Key: ${dmj.wechat.apiV3Key}
+    weChatPayCertFilePath: ${dmj.wechat.weChatPayCertFilePath}
+    notifyUrl: ${dmj.wechat.notifyUrl}
+    refundNotifyUrl: ${dmj.wechat.refundNotifyUrl}
 cos:
   client:
     accessKey: ${dmj.cos.client.accessKey}

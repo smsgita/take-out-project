@@ -1,5 +1,6 @@
 package com.dmj.controller.user;
 
+import com.alibaba.fastjson.JSON;
 import com.dmj.dto.OrdersPaymentDTO;
 import com.dmj.dto.OrdersSubmitDTO;
 import com.dmj.entity.Orders;
@@ -10,6 +11,7 @@ import com.dmj.service.OrderService;
 import com.dmj.vo.OrderPaymentVO;
 import com.dmj.vo.OrderSubmitVO;
 import com.dmj.vo.OrderVO;
+import com.dmj.websocket.WebSocketServer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController("userOrderController")
 @RequestMapping("/user/order")
@@ -28,6 +32,8 @@ public class OrderController {
     OrderService orderService;
     @Resource
     OrderMapper orderMapper;
+    @Resource
+    WebSocketServer webSocketServer;
     @PostMapping("/submit")
     @ApiOperation("用户下单")
     public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO ordersSubmitDTO){
@@ -49,6 +55,18 @@ public class OrderController {
 //        OrderPaymentVO orderPaymentVO = orderService.payment(ordersPaymentDTO);
 //        log.info("生成预支付交易单：{}", orderPaymentVO);
         orderMapper.updatePayStatusByNumber(ordersPaymentDTO.getOrderNumber());
+        Orders orders = orderMapper.getByNumber(ordersPaymentDTO.getOrderNumber());
+        if (orders != null){
+            Map map = new HashMap();
+            map.put("type",1);
+            map.put("order",orders.getId());
+            map.put("content","订单号：" + orders.getNumber());
+
+            String json = JSON.toJSONString(map);
+            webSocketServer.sendToAllClient(json);
+        }
+
+//        webSocketServer.
         return Result.success(new OrderPaymentVO());
     }
 
@@ -102,6 +120,18 @@ public class OrderController {
     @ApiOperation("再来一单")
     public Result repetition(@PathVariable Long id) {
         orderService.repetition(id);
+        return Result.success();
+    }
+
+    /**
+     * 客户催单
+     * @param id
+     * @return
+     */
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("客户催单")
+    public Result reminder(@PathVariable("id") Long id){
+        orderService.reminder(id);
         return Result.success();
     }
 }

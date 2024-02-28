@@ -22,6 +22,7 @@ import com.dmj.vo.OrderPaymentVO;
 import com.dmj.vo.OrderStatisticsVO;
 import com.dmj.vo.OrderSubmitVO;
 import com.dmj.vo.OrderVO;
+import com.dmj.websocket.WebSocketServer;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -55,11 +56,14 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private ShoppingCartMapper shoppingCartMapper;
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
-    @Autowired
+    @Resource
     private WeChatPayUtil weChatPayUtil;
+
+    @Resource
+    private WebSocketServer webSocketServer;
 
     /**
      * 用户下单
@@ -514,6 +518,22 @@ public class OrderServiceImpl implements OrderService {
         orders.setDeliveryTime(LocalDateTime.now());
 
         orderMapper.IUpdate(orders);
+    }
+
+    @Override
+    public void reminder(Long id) {
+        Orders orders = orderMapper.selectById(id);
+
+        if (orders == null){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Map map = new HashMap();
+        map.put("type",2);
+        map.put("order",id);
+        map.put("content","订单号：" + orders.getNumber());
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
     }
 
     @Value("${dmj.shop.address}")

@@ -1,6 +1,7 @@
 package com.dmj.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dmj.dto.GoodsSalesDTO;
 import com.dmj.dto.OrdersPageQueryDTO;
 import com.dmj.entity.Orders;
 import com.github.pagehelper.Page;
@@ -8,8 +9,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper extends BaseMapper<Orders> {
@@ -49,4 +52,19 @@ public interface OrderMapper extends BaseMapper<Orders> {
      */
     @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
     List<Orders> getByStatusAndOrderTime(Integer status, LocalDateTime orderTime);
+
+    /**
+     * 根据动态条件统计营业额数据
+     * @param map
+     * @return
+     */
+    Double sunByMap(Map map);
+
+    /**
+     *  统计指定时间区间内的销量排名前10
+     * @param begin
+     * @param end
+     * @return
+     */
+    List<GoodsSalesDTO> getSalesTop10(LocalDateTime begin, LocalDateTime end);
 }

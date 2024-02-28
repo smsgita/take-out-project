@@ -23,8 +23,7 @@ public class OrderTask {
     /**
      * 处理一直在待付款状态中的订单
      */
-//    @Scheduled(cron = "0 * * * * ?")// 每分钟处理一次
-    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0 * * * * ?")// 每分钟处理一次
     public void processTimeoutOrder(){
         log.info("定时处理超时订单", LocalDateTime.now());
 
@@ -44,9 +43,7 @@ public class OrderTask {
     /**
      * 处理一直处于派送中的订单
      */
-//    @Scheduled(cron = "0 0 1 * * ?")
-    @Scheduled(cron = "0/5 * * * * ?")
-
+    @Scheduled(cron = "0 0 1 * * ?")
     public void processDeliveryOrder(){
         log.info("定时处理处于派送中的订单：{}",LocalDateTime.now());
         LocalDateTime time = LocalDateTime.now().plusMinutes(-60);
